@@ -5,7 +5,7 @@ from userge import userge
 
 @userge.on_cmd("hek$", about={'header': "kensar hacking animation"})
 async def hack_func(message):
-        user = await message.client.get_user_dict(message.from_user.id)
+    user = await message.client.get_user_dict(message.from_user.id)
     heckerman = user['mention']
     animation_chars = [
         "```Connecting To Private Server \\```",
