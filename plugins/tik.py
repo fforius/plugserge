@@ -50,7 +50,7 @@ async def func(message):
         link = d.find_element_by_xpath(
             '//*[@id="download-block"]/div/a[3]'
         ).get_attribute('href')
-        await message.send_video(
+        await message.client.send_video(
             message.chat.id,
             video=link,
             reply_to_message_id=reply_to_id
