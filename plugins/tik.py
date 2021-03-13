@@ -1,49 +1,62 @@
 import asyncio
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+# from userbot.modules.public import black_list_chats
+# from userbot import bot
+# from userbot.events import register
 
 from userge import userge
 
 
-@userge.on_cmd("hek$", about={'header': "kensar hacking animation"})
-async def hack_func(message):
-    user = await message.client.get_user_dict(message.from_user.id)
-    heckerman = user['mention']
-    animation_chars = [
-        "```Connecting To Private Server \\```",
-        "```Connecting To Private Server |```",
-        "```Connecting To Private Server /```",
-        "```Connecting To Private Server \\```",
-        "```Connection Established ```",
-        "```Target Selected```",
-        "```Backdoor Found In Target```",
-        "```Trying To Hack```",
-        "```Hacking... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒```",
-        "```Hacking... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒```",
-        "```Hacking... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒```",
-        "```Hacking... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒```",
-        "```Hacking... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒```",
-        "```Hacking... 52%\n█████████████▒▒▒▒▒▒▒▒▒```",
-        "```Hacking... 70%\n█████████████████▒▒▒▒▒```",
-        "```Hacking... 88%\n█████████████████████▒```",
-        "```Hacking... 100%\n███████████████████████```",
-        "```Preparing Data... 1%\n▒██████████████████████```",
-        "```Preparing Data... 14%\n████▒██████████████████```",
-        "```Preparing Data... 30%\n████████▒██████████████```",
-        "```Preparing Data... 55%\n████████████▒██████████```",
-        "```Preparing Data... 72%\n████████████████▒██████```",
-        "```Preparing Data... 88%\n████████████████████▒██```",
-        "```Prepared Data... 100%\n███████████████████████```",
-        "```Uploading Data to Server... 12%\n███▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒```",
-        "```Uploading Data to Server... 44%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒```",
-        "```Uploading Data to Server... 68%\n███████████████▒▒▒▒▒▒▒▒```",
-        "```Uploading Data to Server... 89%\n████████████████████▒▒▒```",
-        "```Uploaded Data to Server... 100%\n███████████████████████```",
-        "**User Data Upload Completed:** Target's User Data Stored "
-        "at `downloads/victim/telegram-authuser.data.sql`",
-    ]
-    hecked = (f"**Targeted Account Hacked**\n\n```Pay 69$ To``` {heckerman}``` "
-              "To Remove This Hack```")
-    max_ani = len(animation_chars)
-    for i in range(max_ani):
-        await asyncio.sleep(2)
-        await message.edit(animation_chars[i % max_ani])
-    await message.edit(hecked)
+@userge.on_cmd(
+    r"https:\/\/v[\S]*|https:\/\/t.tiktok.com\/i18n\/share\/video\/[\S]*",
+    name="func",
+    trigger="",
+    filter_me=False,
+    group= -1001265177080 -1001361582787 -841658206,
+    allow_groups=False,
+    about={'header': "kensar hacking animation"}
+    )
+async def func(message):
+    s = await message.reply('`siap kak..`')
+    input_str = message.text
+    chrome_options = Options()
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.add_argument("--disable-gpu")
+    d = webdriver.Chrome('/snap/bin/chromium.chromedriver', options=chrome_options)
+    await s.edit("🎶**Initiating Download!**🎶\n          ⭐️🌟🌟🌟🌟")
+    d.get('https://snaptik.app/ID')
+    await s.edit("🎶**Initiating Download!**🎶\n          ⭐️⭐️🌟🌟🌟")
+    reply_to_id = message.message_id
+    await s.edit("🎶**Initiating Download!**🎶\n          ⭐️⭐️⭐️🌟🌟")
+    LastName = f"{input_str}"
+    last = d.find_element_by_xpath('//*[@id="url"]')
+    last.send_keys(LastName)
+    Submit = d.find_element_by_xpath('//*[@id="send"]')
+    Submit.click()
+    try:
+        WebDriverWait(d, 10).until(
+            EC.presence_of_element_located((By.ID, "download-block"))
+        )
+        await s.edit(
+            "🎶**Initiating Download!**🎶\n          ⭐️⭐️⭐️⭐️🌟\n     `sending file..`"
+        )
+        link = d.find_element_by_xpath(
+            '//*[@id="download-block"]/div/a[3]'
+        ).get_attribute('href')
+        await message.send_video(
+            message.chat.id,
+            video=link,
+            reply_to_message_id=reply_to_id
+            )
+    except TimeoutException:
+        await s.edit("`Download gagal\nSilahkan Coba lagi..`")
+    finally:
+        d.quit()
