@@ -18,8 +18,7 @@ from userge import userge
     name="func",
     trigger="",
     filter_me=False,
-    group= -1001265177080 -1001361582787 -841658206,
-    allow_groups=False,
+    allow_groups= -1001265177080 -1001361582787 -841658206,
     about={'header': "kensar hacking animation"}
     )
 async def func(message):
